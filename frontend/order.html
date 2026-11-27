@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#4a3324">
+  <title>Bán hàng - Coffee Manager</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/img/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="page" class="hidden">
+    <div class="pos">
+      <section class="pos-menu">
+        <div class="row">
+          <div class="field" style="flex:2"><input id="search" class="search" type="search" placeholder="🔍 Tìm món (phím tắt: /)"></div>
+          <div class="field" style="flex:0 0 auto"><button id="btn-pending">⏳ Đơn chờ thanh toán <span id="pending-count" class="badge neutral">0</span></button></div>
+        </div>
+        <div class="chips" id="cat-chips"></div>
+        <div class="product-grid" id="products"><div class="muted">Đang tải thực đơn...</div></div>
+      </section>
+
+      <aside class="card cart" id="cart">
+        <div class="cart-toggle" id="cart-toggle"><b>🛒 Giỏ hàng · <span id="cart-count">0</span> món</b><b id="cart-total-mini">0đ</b></div>
+        <div class="card-head"><h2>Đơn hàng mới</h2><button class="btn-sm btn-danger" id="btn-clear">Xóa hết</button></div>
+        <div class="row">
+          <div class="field"><label for="table-no">Bàn / Số thẻ</label><input id="table-no" placeholder="VD: 5, Mang đi"></div>
+          <div class="field"><label for="discount">Giảm giá (đ)</label><input id="discount" type="number" min="0" step="1000" value="0" inputmode="numeric"></div>
+        </div>
+        <div class="cart-items" id="cart-items"></div>
+        <div class="cart-total">
+          <div class="line"><span>Tạm tính</span><span id="subtotal" class="num">0đ</span></div>
+          <div class="line"><span>Giảm giá</span><span id="disc-view" class="num">0đ</span></div>
+          <div class="line"><b>Tổng cộng</b><span id="grand" class="grand num">0đ</span></div>
+        </div>
+        <div class="pay-buttons">
+          <button class="btn-success btn-lg" id="pay-cash">💵 Tiền mặt</button>
+          <button class="btn-primary btn-lg" id="pay-qr">📱 QR</button>
+        </div>
+        <button class="btn-block" style="margin-top:8px" id="btn-hold">Lưu đơn, thanh toán sau</button>
+      </aside>
+    </div>
+  </div>
+  <script src="/js/api.js"></script>
+  <script src="/js/layout.js"></script>
+  <script src="/js/order.js"></script>
+</body>
+</html>

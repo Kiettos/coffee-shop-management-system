@@ -1,0 +1,12 @@
+{
+  "name": "Coffee Manager - Quản lý quán cafe",
+  "short_name": "Coffee Manager",
+  "start_url": "/order.html",
+  "display": "standalone",
+  "background_color": "#f6f4f1",
+  "theme_color": "#4a3324",
+  "lang": "vi",
+  "icons": [
+    { "src": "/img/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

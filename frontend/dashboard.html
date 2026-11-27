@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#4a3324">
+  <title>Báo cáo & phân tích - Coffee Manager</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/img/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="page" class="hidden">
+    <!-- Bộ lọc: một hàng phía trên mọi biểu đồ -->
+    <div class="filters">
+      <div class="chips" id="presets">
+        <button class="chip" data-p="today">Hôm nay</button>
+        <button class="chip" data-p="7">7 ngày</button>
+        <button class="chip active" data-p="30">30 ngày</button>
+        <button class="chip" data-p="month">Tháng này</button>
+        <button class="chip" data-p="lastmonth">Tháng trước</button>
+      </div>
+      <input type="date" id="from" aria-label="Từ ngày">
+      <span class="muted">→</span>
+      <input type="date" id="to" aria-label="Đến ngày">
+      <select id="group" aria-label="Gộp theo">
+        <option value="day">Theo ngày</option>
+        <option value="week">Theo tuần</option>
+        <option value="month">Theo tháng</option>
+      </select>
+      <span style="flex:1"></span>
+      <button id="btn-xlsx">📗 Xuất Excel</button>
+      <button id="btn-pdf">📕 Xuất PDF</button>
+    </div>
+    <p class="muted small" id="range-note"></p>
+
+    <div class="grid kpis" id="kpis"></div>
+
+    <div class="tabs section-gap" role="tablist">
+      <button class="active" data-tab="sales">Doanh thu</button>
+      <button data-tab="products">Sản phẩm & lợi nhuận</button>
+      <button data-tab="staff">Ca & thu ngân</button>
+      <button data-tab="stock">Kho & thất thoát</button>
+      <button data-tab="advanced">Phân tích nâng cao</button>
+    </div>
+
+    <!-- DOANH THU -->
+    <section data-pane="sales">
+      <div class="card">
+        <div class="card-head"><h2 id="ts-title">Doanh thu theo ngày</h2>
+          <button class="btn-sm" data-toggle="ts">Xem bảng</button></div>
+        <div class="legend" id="ts-legend"></div>
+        <div class="chart-box tall"><canvas id="c-ts"></canvas></div>
+        <div id="t-ts" class="hidden"></div>
+      </div>
+      <div class="grid cols-2 section-gap">
+        <div class="card">
+          <div class="card-head"><h2>Theo phương thức thanh toán</h2></div>
+          <div class="chart-box short"><canvas id="c-pay"></canvas></div>
+          <div id="t-pay" class="section-gap"></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>Theo danh mục</h2></div>
+          <div class="chart-box short"><canvas id="c-cat"></canvas></div>
+          <div id="t-cat" class="section-gap"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SẢN PHẨM -->
+    <section data-pane="products" class="hidden">
+      <div class="grid cols-2">
+        <div class="card"><div class="card-head"><h2>🔥 Top 10 món bán chạy</h2></div><div id="t-best"></div></div>
+        <div class="card"><div class="card-head"><h2>🐢 Top 10 món bán chậm</h2></div><div id="t-worst"></div></div>
+      </div>
+      <div class="card section-gap">
+        <div class="card-head"><h2>Lợi nhuận theo món</h2><span class="muted small">Giá vốn tính từ công thức pha chế × giá vốn nguyên liệu hiện tại. Bấm tiêu đề cột để sắp xếp.</span></div>
+        <div id="t-profit"></div>
+      </div>
+    </section>
+
+    <!-- CA & THU NGÂN -->
+    <section data-pane="staff" class="hidden">
+      <div class="grid cols-2">
+        <div class="card">
+          <div class="card-head"><h2>Doanh thu theo ca</h2></div>
+          <div class="chart-box short"><canvas id="c-shift"></canvas></div>
+          <div id="t-shift" class="section-gap"></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>Doanh thu theo thu ngân</h2></div>
+          <div class="chart-box short"><canvas id="c-cashier"></canvas></div>
+          <div id="t-cashier" class="section-gap"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KHO -->
+    <section data-pane="stock" class="hidden">
+      <div class="card">
+        <div class="card-head"><h2>Lý thuyết vs thực tế — chênh lệch = thất thoát</h2></div>
+        <div class="grid kpis" id="loss-kpis" style="margin-bottom:14px"></div>
+        <p class="muted small">
+          <b>Lý thuyết</b>: lượng nguyên liệu phải dùng theo công thức cho các món đã bán.
+          <b>Thực tế</b>: lý thuyết + hàng hủy/hỏng + phần thiếu hụt phát hiện khi kiểm kê.
+          Thất thoát &gt; 3% được đánh dấu cần kiểm tra.
+        </p>
+        <div id="t-loss"></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>Nguyên liệu tiêu hao trong kỳ</h2></div>
+        <div id="t-usage"></div>
+      </div>
+    </section>
+
+    <!-- NÂNG CAO -->
+    <section data-pane="advanced" class="hidden">
+      <div class="card">
+        <div class="card-head"><h2>Giờ cao điểm — số đơn theo giờ × thứ</h2>
+          <div class="chips"><button class="chip active" data-hm="orders">Số đơn</button><button class="chip" data-hm="revenue">Doanh thu</button></div></div>
+        <div id="hm"></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>Tỷ lệ món bị hủy & món hết nguyên liệu</h2></div>
+        <div class="grid kpis" id="cancel-kpis" style="margin-bottom:14px"></div>
+        <div class="grid cols-2">
+          <div id="t-cancel"></div>
+          <div><h3 style="margin-bottom:8px">Lý do hủy món</h3><div id="t-reasons"></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>Dự báo ngày hết hàng</h2><a class="btn btn-sm" href="/forecast.html">Xem chi tiết & dự báo AI →</a></div>
+        <div id="t-forecast"></div>
+      </div>
+    </section>
+  </div>
+  <script src="/vendor/chart.umd.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/layout.js"></script>
+  <script src="/js/charts.js"></script>
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>
