@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#4a3324">
+  <title>Nhân viên - Coffee Manager</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/img/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="page" class="hidden">
+    <div class="card">
+      <div class="card-head"><h2>Danh sách nhân viên</h2><button class="btn-primary" id="btn-add">➕ Thêm nhân viên</button></div>
+      <div id="t-emp"></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><h2>Đổi mật khẩu của tôi</h2></div>
+      <div class="row" style="max-width:640px">
+        <div class="field"><label for="old-pw">Mật khẩu hiện tại</label><input id="old-pw" type="password" autocomplete="current-password"></div>
+        <div class="field"><label for="new-pw">Mật khẩu mới</label><input id="new-pw" type="password" autocomplete="new-password"></div>
+        <div class="field" style="flex:0"><button class="btn-primary" id="btn-pw">Đổi</button></div>
+      </div>
+    </div>
+  </div>
+  <script src="/js/api.js"></script>
+  <script src="/js/layout.js"></script>
+  <script src="/js/employees.js"></script>
+</body>
+</html>

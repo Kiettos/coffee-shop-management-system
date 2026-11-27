@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#4a3324">
+  <title>Đơn hàng - Coffee Manager</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/img/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="page" class="hidden">
+    <div class="filters">
+      <input type="search" id="q" placeholder="🔍 Mã đơn / số bàn" style="width:200px">
+      <select id="status" style="width:auto">
+        <option value="">Tất cả trạng thái</option>
+        <option value="pending">Chờ thanh toán</option>
+        <option value="paid">Đã thanh toán</option>
+        <option value="cancelled">Đã hủy</option>
+      </select>
+      <input type="date" id="from" aria-label="Từ ngày">
+      <input type="date" id="to" aria-label="Đến ngày">
+      <button id="btn-reload">🔄 Tải lại</button>
+    </div>
+    <div class="grid kpis" id="o-kpis" style="margin-bottom:16px"></div>
+    <div class="card"><div id="t-orders"></div></div>
+  </div>
+  <script src="/js/api.js"></script>
+  <script src="/js/layout.js"></script>
+  <script src="/js/orders.js"></script>
+</body>
+</html>

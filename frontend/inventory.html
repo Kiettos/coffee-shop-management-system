@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#4a3324">
+  <title>Kho nguyên liệu - Coffee Manager</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/img/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="page" class="hidden">
+    <div class="tabs" role="tablist">
+      <button class="active" data-tab="stock">Tồn kho</button>
+      <button data-tab="count" data-manager>Kiểm kê</button>
+      <button data-tab="tx">Lịch sử nhập / xuất</button>
+      <button data-tab="counts">Lịch sử kiểm kê</button>
+    </div>
+
+    <section data-pane="stock">
+      <div class="filters">
+        <input type="search" id="q" placeholder="🔍 Tìm nguyên liệu" style="width:220px">
+        <div class="chips" id="level-chips">
+          <button class="chip active" data-l="">Tất cả</button>
+          <button class="chip" data-l="low">⚠ Dưới định mức</button>
+          <button class="chip" data-l="out">✖ Hết hàng</button>
+        </div>
+        <span style="flex:1"></span>
+        <button class="btn-primary" id="btn-import" data-manager>📥 Nhập hàng</button>
+        <button id="btn-add" data-manager>➕ Thêm nguyên liệu</button>
+      </div>
+      <div class="grid kpis" id="i-kpis" style="margin-bottom:16px"></div>
+      <div class="card"><div id="t-stock"></div></div>
+    </section>
+
+    <section data-pane="count" class="hidden">
+      <div class="card">
+        <div class="card-head"><h2>Kiểm kê kho thực tế</h2><button class="btn-primary" id="btn-count-save">💾 Lưu kết quả kiểm kê</button></div>
+        <p class="muted small">Nhập số lượng đếm được thực tế. Chênh lệch giữa tồn hệ thống (lý thuyết) và thực tế sẽ được ghi nhận là <b>thất thoát</b>
+          và hiển thị trong báo cáo "Lý thuyết vs thực tế". Để trống những dòng không kiểm.</p>
+        <div id="t-count"></div>
+      </div>
+    </section>
+
+    <section data-pane="tx" class="hidden">
+      <div class="filters">
+        <select id="tx-type" style="width:auto">
+          <option value="">Tất cả loại</option><option value="import">Nhập hàng</option><option value="consume">Bán (tiêu hao)</option>
+          <option value="return">Hoàn kho</option><option value="waste">Hủy / hỏng</option><option value="adjust">Điều chỉnh kiểm kê</option>
+        </select>
+        <select id="tx-ing" style="width:auto"><option value="">Tất cả nguyên liệu</option></select>
+      </div>
+      <div class="card"><div id="t-tx"></div></div>
+    </section>
+
+    <section data-pane="counts" class="hidden">
+      <div class="card"><div id="t-counts"></div></div>
+    </section>
+  </div>
+  <script src="/js/api.js"></script>
+  <script src="/js/layout.js"></script>
+  <script src="/js/inventory.js"></script>
+</body>
+</html>

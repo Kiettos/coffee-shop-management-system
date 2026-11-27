@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#4a3324">
+  <title>Dự báo & AI - Coffee Manager</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/img/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="page" class="hidden">
+    <div class="card">
+      <div class="card-head">
+        <h2>📉 Dự báo ngày hết hàng (theo tốc độ tiêu thụ)</h2>
+        <label class="small" for="window" style="margin:0">Dựa trên</label>
+        <select id="window" style="width:auto"><option value="7">7 ngày</option><option value="14" selected>14 ngày</option><option value="30">30 ngày</option></select>
+      </div>
+      <p class="muted small">Tốc độ tiêu thụ = (bán + hủy hỏng) trung bình/ngày; lấy giá trị cao hơn giữa cả kỳ và nửa kỳ gần nhất để dự báo thận trọng.
+        Gợi ý nhập = đủ dùng 14 ngày.</p>
+      <div class="grid kpis" id="f-kpis" style="margin-bottom:14px"></div>
+      <div class="chart-box tall"><canvas id="c-days"></canvas></div>
+      <div id="t-forecast" class="section-gap"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h2>🤖 Dự báo nguồn cung bằng AI (tin tức & mạng xã hội)</h2><span id="ai-engine" class="badge neutral"></span></div>
+      <p class="muted small">Hệ thống thu thập tiêu đề tin tức mới nhất về giá cà phê, sữa, đường, trà (Google News) và phân tích cùng nội dung bạn dán vào
+        (bài báo, bài đăng Facebook/nhóm Zalo của nhà cung cấp...). Có khóa Claude API thì dùng AI để nhận diện xu hướng; không có thì dùng bộ phân tích từ khóa.</p>
+      <div class="field">
+        <label for="news">Nội dung tin tức / bài đăng mạng xã hội (mỗi tin một dòng — không bắt buộc)</label>
+        <textarea id="news" rows="5" placeholder="VD: Giá cà phê Robusta tăng mạnh lên mức kỷ lục do hạn hán ở Tây Nguyên&#10;Nhà cung cấp sữa báo tăng giá 8% từ tháng sau"></textarea>
+      </div>
+      <div class="row" style="align-items:center">
+        <label style="font-weight:400;display:flex;gap:6px;align-items:center;margin:0"><input type="checkbox" id="fetch" checked style="width:auto;min-height:auto"> Tự động lấy tin tức trên Internet</label>
+        <span style="flex:1"></span>
+        <button class="btn-primary" id="btn-analyze">🔍 Phân tích & dự báo</button>
+      </div>
+      <div id="ai-result" class="section-gap"></div>
+    </div>
+  </div>
+  <script src="/vendor/chart.umd.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/layout.js"></script>
+  <script src="/js/charts.js"></script>
+  <script src="/js/forecast.js"></script>
+</body>
+</html>
